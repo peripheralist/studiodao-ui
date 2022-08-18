@@ -70,8 +70,10 @@ const Home: NextPage = () => {
           <br />
           <br />
           <br />
-          <b>Token balances</b>
-          <br />
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <b>Token</b>
+            <b>Balance</b>
+          </div>
           {erc721Tokens.length > 0 && (
             <div>
               {erc721Tokens.map((t) => (
