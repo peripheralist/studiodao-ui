@@ -24,10 +24,12 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <section>
+        <section style={{ maxWidth: 800, margin: "0 auto" }}>
           <h4>Check ERC20 + ERC721 token balances for any wallet address</h4>
           <label htmlFor="wallet">Wallet</label>
+          <br />
           <input
+            style={{ width: 400 }}
             id="wallet"
             name="wallet"
             placeholder={constants.AddressZero}
@@ -38,8 +40,10 @@ const Home: NextPage = () => {
           />
           <br />
           <br />
-          <label htmlFor="erc20tokens">ERC20 Tokens</label>
+          <label htmlFor="erc20tokens">ERC20 tokens</label>
+          <br />
           <textarea
+            style={{ width: 400 }}
             id="erc20tokens"
             name="erc20tokens"
             placeholder="ERC20 token addresses separated by commas"
@@ -50,8 +54,10 @@ const Home: NextPage = () => {
           />
           <br />
           <br />
-          <label htmlFor="erc721tokens">ERC721 Tokens</label>
+          <label htmlFor="erc721tokens">ERC721 tokens</label>
+          <br />
           <textarea
+            style={{ width: 400 }}
             id="erc721tokens"
             name="erc721tokens"
             placeholder="ERC721 token addresses separated by commas"
@@ -62,10 +68,12 @@ const Home: NextPage = () => {
           />
           <br />
           <br />
-          {erc721Tokens.length && (
+          <br />
+          <br />
+          <b>Token balances</b>
+          <br />
+          {erc721Tokens.length > 0 && (
             <div>
-              ERC721 tokens
-              <br />
               {erc721Tokens.map((t) => (
                 <TokenBalance
                   key={t}
@@ -77,10 +85,8 @@ const Home: NextPage = () => {
             </div>
           )}
           <br />
-          {erc20Tokens.length && (
+          {erc20Tokens.length > 0 && (
             <div>
-              ERC20 tokens
-              <br />
               {erc20Tokens.map((t) => (
                 <TokenBalance
                   key={t}

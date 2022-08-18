@@ -13,15 +13,22 @@ export default function TokenBalance({
   token: string | undefined;
   tokenType: "ERC721" | "ERC20";
 }) {
+  const contract = useGenericContract(token, tokenType);
   const balance = useContractReader<BigNumber>({
-    contract: useGenericContract(token, tokenType),
+    contract,
     functionName: "balanceOf",
     args: [wallet],
+  });
+  const symbol = useContractReader<string>({
+    contract,
+    functionName: "symbol",
   });
 
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div>{token}:</div>
+      <div>
+        <b>{symbol}</b>:
+      </div>
       <div>{balance ? formatEther(balance) : "--"}</div>
     </div>
   );

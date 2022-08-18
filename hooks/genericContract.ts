@@ -1,5 +1,5 @@
 import { isAddress } from "@ethersproject/address";
-import { Contract } from "@ethersproject/contracts";
+import { Contract, ContractInterface } from "@ethersproject/contracts";
 
 import { NetworkContext } from "../contexts/networkContext";
 import * as constants from "@ethersproject/constants";
@@ -15,12 +15,15 @@ export function useGenericContract(
   const { signingProvider } = useContext(NetworkContext);
 
   useEffect(() => {
-    const loadAbi = () => import(`../constants/abis/${name}.json`);
+    const loadAbi = (): Promise<{ default: ContractInterface }> =>
+      import(`../constants/abis/${name}.json`);
 
     const provider = signingProvider ?? readProvider;
 
     provider.listAccounts().then(async (accounts) => {
       const abi = await loadAbi();
+
+      console.log("abi", abi);
 
       if (
         !address ||
@@ -29,9 +32,9 @@ export function useGenericContract(
       ) {
         setContract(undefined);
       } else if (!accounts.length) {
-        setContract(new Contract(address, abi, readProvider));
+        setContract(new Contract(address, abi.default, readProvider));
       } else {
-        setContract(new Contract(address, abi, provider.getSigner()));
+        setContract(new Contract(address, abi.default, provider.getSigner()));
       }
     });
   }, [address, signingProvider, name]);
